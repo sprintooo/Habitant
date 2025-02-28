@@ -9,7 +9,7 @@ class HabitService(private val habitRepository: HabitRepository) {
         return habitRepository.save(habit)
     }
 
-    fun getUserHabits(userId: Long): List<Habit> {
-        return habitRepository.findByUserId(userId)
+    fun getUserHabits(userName: String): List<Habit> {
+        return habitRepository.findByUserName(userName)
     }
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface HabitRepository: JpaRepository<Habit, Long> {
 
-    fun findByUserId(useId: Long): List<Habit>
+    fun findByUserName(userName: String): List<Habit>
 
 }

@@ -1,41 +1,34 @@
 package com.example.habitant.habits
 
-import com.example.habitant.user.User
-import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.security.core.context.SecurityContextHolder
+import com.example.habitant.user.UserRepository
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.web.bind.annotation.*
+import java.security.Principal
 
 @RestController
 @RequestMapping("/api/habits")
-class HabitController(private val habitService: HabitService) {
-
+class HabitController(
+    private val habitService: HabitService,
+    private val userRepository: UserRepository
+) {
     @PostMapping
     fun createHabit(
         @RequestBody request: HabitRequest,
-        @AuthenticationPrincipal user: User  // Get logged-in user
+        principal: Principal
     ): Habit {
-        println("Logged in User : $user")
+        val user = userRepository.findByUsername(principal.name) ?: throw UsernameNotFoundException("User not found")
         val habit = Habit(
             name = request.name,
             description = request.description,
             status = request.status,
-            user = user
+            userName = user.username
         )
         return habitService.createHabit(habit)
     }
 
     @GetMapping
-    fun getUserHabits(@AuthenticationPrincipal user: User?): List<Habit> {
-        println("Inside getUserHabits function") // Debugging line
-        val authentication = SecurityContextHolder.getContext().authentication
-
-        if (authentication == null) {
-            println("❌ Authentication is NULL")
-            throw IllegalStateException("User is not authenticated")
-        }
-
-        println("✅ Authenticated User: ${authentication.name}")
-
-        return habitService.getUserHabits(user?.id ?: throw IllegalStateException("User is null"))
+    fun getUserHabits(principal: Principal): List<Habit> {
+        val user = userRepository.findByUsername(principal.name) ?: throw UsernameNotFoundException("User not found")
+        return habitService.getUserHabits(user.username)
     }
 }
