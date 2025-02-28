@@ -1,4 +1,4 @@
-package com.example.habitant
+package com.example.habitant.user
 
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service

@@ -1,4 +1,4 @@
-package com.example.habitant
+package com.example.habitant.user
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -13,6 +13,7 @@ class UserController(
 ) {
     @GetMapping
     fun getAllUsers(): List<User> {
+        println("Get all users")
         return userService.getUsers();
     }
 

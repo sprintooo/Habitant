@@ -1,4 +1,4 @@
-package com.example.habitant
+package com.example.habitant.user
 
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
