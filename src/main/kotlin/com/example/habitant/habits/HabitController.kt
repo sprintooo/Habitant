@@ -14,6 +14,7 @@ class HabitController(private val habitService: HabitService) {
         @RequestBody request: HabitRequest,
         @AuthenticationPrincipal user: User  // Get logged-in user
     ): Habit {
+        println("Logged in User : $user")
         val habit = Habit(
             name = request.name,
             description = request.description,

@@ -8,5 +8,8 @@ data class User(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
     val username: String,
-    val password: String
+    val password: String,
+
+    @Enumerated(EnumType.STRING)
+    val role: Role = Role.USER // Default role
 )
